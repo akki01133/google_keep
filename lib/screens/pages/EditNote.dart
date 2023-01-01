@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:note_machine/ui/models/note_entity.dart';
+
+import '../models/note_entity.dart';
 
 Widget editNotePage({required context,required NoteEntity noteEntity })
     {

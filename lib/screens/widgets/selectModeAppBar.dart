@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_machine/services/data/repository/note_repository.dart';
-import 'package:note_machine/ui/menu/selectModeMenu.dart';
+import 'package:note_machine/screens/menu/selectModeMenu.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/multi_note_select_state.dart';

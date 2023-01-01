@@ -1,5 +1,6 @@
 import 'package:note_machine/services/data/database/note_db_entity.dart';
-import 'package:note_machine/ui/models/note_entity.dart';
+
+import '../../screens/models/note_entity.dart';
 
 class MapperException<From, To> implements Exception{
   final String message;

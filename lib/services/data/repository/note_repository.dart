@@ -1,5 +1,5 @@
 import 'package:note_machine/services/data/database/object_box.dart';
-import '../../../ui/models/note_entity.dart';
+import '../../../screens/models/note_entity.dart';
 import '../mapper.dart';
 
 class NotesRepository{

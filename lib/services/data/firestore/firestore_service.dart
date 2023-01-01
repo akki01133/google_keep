@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:note_machine/ui/models/note_entity.dart';
 
+import '../../../screens/models/note_entity.dart';
 import 'note_net_entity.dart';
 
 class FirebaseException implements Exception{

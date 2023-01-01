@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:note_machine/ui/pages/NotePage.dart';
+
+import '../pages/NotePage.dart';
 Widget sidebarDrawerWidget(BuildContext context, int index) {
     int selectedIndex = index;
 

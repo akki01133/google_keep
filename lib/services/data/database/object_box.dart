@@ -1,5 +1,5 @@
-import './note_db_entity.dart';
 import '../../../objectbox.g.dart';
+import './note_db_entity.dart';
 
 class ObjectBox{
 

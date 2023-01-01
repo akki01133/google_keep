@@ -1,20 +1,18 @@
-import 'dart:collection';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:note_machine/providers/multi_note_select_state.dart';
 import 'package:note_machine/services/data/repository/note_repository.dart';
-import 'package:note_machine/ui/models/note_entity.dart';
-import 'package:note_machine/ui/pages/EditNote.dart';
-import 'package:note_machine/ui/widgets/SideDrawerWidget.dart';
-import 'package:note_machine/ui/widgets/selectModeAppBar.dart';
 import 'package:provider/provider.dart';
 import '../../providers/google_sign_in.dart';
+import '../models/note_entity.dart';
 import '../widgets/BottomBarWidget.dart';
 import '../widgets/CustomAppBar.dart';
 import '../widgets/NoteTileWidget.dart';
 import '../../main.dart';
+import '../widgets/SideDrawerWidget.dart';
+import '../widgets/selectModeAppBar.dart';
+import 'EditNote.dart';
 
 
 class NotePage extends StatefulWidget {

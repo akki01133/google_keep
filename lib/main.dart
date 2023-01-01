@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:note_machine/providers/google_sign_in.dart';
 import 'package:note_machine/providers/multi_note_select_state.dart';
+import 'package:note_machine/screens/pages/NotePage.dart';
 import 'package:note_machine/services/data/database/object_box.dart';
-import 'package:note_machine/ui/pages/NotePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
@@ -14,17 +14,17 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.init();
   await Firebase.initializeApp();
-  runApp(NoteMachine());
+  runApp(NoteApp());
 }
 
-class NoteMachine extends StatefulWidget {
-  const NoteMachine({Key? key}) : super(key: key);
+class NoteApp extends StatefulWidget {
+  const NoteApp({Key? key}) : super(key: key);
 
   @override
-  State<NoteMachine> createState() => _NoteMachineState();
+  State<NoteApp> createState() => _NoteAppState();
 }
 
-class _NoteMachineState extends State<NoteMachine> {
+class _NoteAppState extends State<NoteApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,25 +59,25 @@ class _GoogleAuthenticatedAppState extends State<GoogleAuthenticatedApp> {
   bool hasError = false;
 
   @override
+  void initState() {
+    super.initState();
+    Provider.of<GoogleSignInProvider>(context, listen: false).googleLogin();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-    provider.googleLogin();
     return Scaffold(
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context,snapshot){
           if(snapshot.connectionState == ConnectionState.waiting){
-            setState((){
-              hasError = false;
-            });
+            setState((){hasError = false;});
             return Center(
               child: CircularProgressIndicator(),
             );
           }
           if(snapshot.hasError){
-            setState((){
-              hasError = true;
-            });
+            setState((){hasError = true;});
           }
           if(snapshot.hasData){
             return NotePage();
@@ -88,7 +88,7 @@ class _GoogleAuthenticatedAppState extends State<GoogleAuthenticatedApp> {
               children: [
                 if(hasError) Text('something Went Wrong!!', style: TextStyle(color: Colors.redAccent,fontSize: 18)),
                 ElevatedButton(
-                    onPressed: ()=>provider.googleLogin() ,
+                    onPressed: ()=>Provider.of<GoogleSignInProvider>(context, listen: false).googleLogin() ,
                     child: Text('Sign In with Google To continue',style: TextStyle(color: Colors.white,fontSize: 20),)
                 )
               ],

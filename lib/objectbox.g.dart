@@ -19,33 +19,33 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 4767205695973489672),
+      id: const IdUid(1, 7140866250669092626),
       name: 'NoteDbEntity',
-      lastPropertyId: const IdUid(5, 383756406808247795),
+      lastPropertyId: const IdUid(5, 2541434260908350015),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 7430514364926870546),
+            id: const IdUid(1, 5278560625879520214),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 8809885886780886104),
+            id: const IdUid(2, 5991930527325799105),
             name: 'title',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 7461365075090793625),
+            id: const IdUid(3, 6812579507899398714),
             name: 'note',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 446375225835367397),
+            id: const IdUid(4, 3012756661425884357),
             name: 'time',
             type: 6,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 383756406808247795),
+            id: const IdUid(5, 2541434260908350015),
             name: 'status',
             type: 6,
             flags: 0)
@@ -74,7 +74,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 4767205695973489672),
+      lastEntityId: const IdUid(1, 7140866250669092626),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
