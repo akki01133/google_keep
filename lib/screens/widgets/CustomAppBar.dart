@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget{
   final User user;
   final double topHeight;
   final VoidCallback callback;
@@ -9,8 +9,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const CustomAppBar({Key? key,required this.user, required this.topHeight, required this.callback, required this.googleSignInCallback}) : super(key: key);
 
-  @override
-  Size get preferredSize => Size.fromHeight(55);
 
   @override
   Widget build(BuildContext context) {

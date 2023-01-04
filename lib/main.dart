@@ -71,13 +71,9 @@ class _GoogleAuthenticatedAppState extends State<GoogleAuthenticatedApp> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context,snapshot){
           if(snapshot.connectionState == ConnectionState.waiting){
-            setState((){hasError = false;});
             return Center(
               child: CircularProgressIndicator(),
             );
-          }
-          if(snapshot.hasError){
-            setState((){hasError = true;});
           }
           if(snapshot.hasData){
             return NotePage();
@@ -86,7 +82,7 @@ class _GoogleAuthenticatedAppState extends State<GoogleAuthenticatedApp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if(hasError) Text('something Went Wrong!!', style: TextStyle(color: Colors.redAccent,fontSize: 18)),
+                if(snapshot.hasError) Text('something Went Wrong!!', style: TextStyle(color: Colors.redAccent,fontSize: 18)),
                 ElevatedButton(
                     onPressed: ()=>Provider.of<GoogleSignInProvider>(context, listen: false).googleLogin() ,
                     child: Text('Sign In with Google To continue',style: TextStyle(color: Colors.white,fontSize: 20),)

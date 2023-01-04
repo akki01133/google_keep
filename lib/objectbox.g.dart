@@ -5,6 +5,7 @@
 // See also https://docs.objectbox.io/getting-started#generate-objectbox-code
 
 // ignore_for_file: camel_case_types
+// coverage:ignore-file
 
 import 'dart:typed_data';
 
@@ -19,33 +20,33 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 7140866250669092626),
+      id: const IdUid(1, 7616452749666942933),
       name: 'NoteDbEntity',
-      lastPropertyId: const IdUid(5, 2541434260908350015),
+      lastPropertyId: const IdUid(5, 4211883387493933649),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 5278560625879520214),
+            id: const IdUid(1, 3397567401332683758),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 5991930527325799105),
+            id: const IdUid(2, 4445878720123971297),
             name: 'title',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 6812579507899398714),
+            id: const IdUid(3, 840025085929726494),
             name: 'note',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 3012756661425884357),
+            id: const IdUid(4, 8828948872787030578),
             name: 'time',
             type: 6,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 2541434260908350015),
+            id: const IdUid(5, 4211883387493933649),
             name: 'status',
             type: 6,
             flags: 0)
@@ -74,7 +75,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 7140866250669092626),
+      lastEntityId: const IdUid(1, 7616452749666942933),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),

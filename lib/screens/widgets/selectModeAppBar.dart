@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/multi_note_select_state.dart';
 
-class SelectModeAppBar extends StatelessWidget implements PreferredSizeWidget {
+class SelectModeAppBar extends StatelessWidget {
   final BuildContext context;
   final VoidCallback disableSelectModeCallBack;
   final double topHeight;
@@ -20,8 +20,6 @@ class SelectModeAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.archiveCallBack,
     }) : super(key: key);
 
-  @override
-  Size get preferredSize => Size.fromHeight(62);
 
   @override
   Widget build(BuildContext context) {

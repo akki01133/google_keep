@@ -24,7 +24,6 @@ class NotePage extends StatefulWidget {
 
 class _NotePageState extends State<NotePage> {
   final NotesRepository notesRepository = NotesRepository(objectBox: objectBox);
-  late MultiNoteSelectProvider mnsProvider;
   late Stream<List<NoteEntity>> streamNotes;
   late Widget sidebarDrawer;
 
@@ -39,78 +38,72 @@ class _NotePageState extends State<NotePage> {
 
   @override
   Widget build(BuildContext context) {
-    mnsProvider = Provider.of<MultiNoteSelectProvider>(context, listen: true);
-    final user = FirebaseAuth.instance.currentUser!;
     sidebarDrawer = sidebarDrawerWidget(context, 0);
     return Scaffold(
-      appBar: mnsProvider.multiSelectMode
-          ? selectModeAppBarBuilder()
-          : CustomAppBar(topHeight: MediaQuery.of(context).viewPadding.top, callback: mnsProvider.disableMultiSelectedMode, user: user, googleSignInCallback: googleSignInCallback),
-      body: noteListInkWidget(),
+      backgroundColor: Color(0xff1f1f1f),
+      appBar: NoteAppBar(context: context,notesRepository: notesRepository,),
+      body: Container(
+        margin: EdgeInsets.only( top: 14, left: 10, right: 10, bottom: 0),
+        child: StreamBuilder<List<NoteEntity>>(
+            stream: streamNotes,
+            builder: (context, snapshot) {
+              if(!snapshot.hasData){
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              final noteList = snapshot.data!;
+              if(noteList.isEmpty){
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.note_add, size: 70,color: Colors.white60,),
+                      SizedBox.fromSize(size: Size.fromHeight(10),),
+                      Text('notes you add will appear here', style: TextStyle(color: Colors.white60, fontSize: 16)),
+                      SizedBox.fromSize(size: Size.fromHeight(15),),
+                    ],
+                  ),
+                );
+              }
+              return Consumer<MultiNoteSelectProvider>(
+                builder:(context, mnsProvider, child) =>  ListView.builder(
+                  reverse: false,
+                  itemCount: noteList.length,
+                  itemBuilder: (context, index) {
+                    final note = noteList[index];
+                    return NoteTileWidget(
+                      note: note,
+                      onTapCallBack: ()=> onTapNoteTile(context, note, index),
+                      onLongPressCallBack: () => onLongPressNoteTile(index, note.id),
+                      isSelected: mnsProvider.isNoteSelectedMap[index]!=null ? true :  false,
+                      index: index,
+                    );
+                  },
+                ),
+              );
+
+            }
+        ),
+      ),
       drawer: sidebarDrawer,
       bottomNavigationBar: bottomBarWidget(context: context, callBack: ()=>_createAndReturnCreatedNote(context)),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      backgroundColor: Color(0xff1f1f1f),
     );
   }
 
-  Widget noteListInkWidget() => (
-      Container(
-         margin: EdgeInsets.only( top: 14, left: 10, right: 10, bottom: 0),
-        child: StreamBuilder<List<NoteEntity>>(
-          stream: streamNotes,
-          builder: (context, snapshot) {
-            if(!snapshot.hasData){
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            final noteList = snapshot.data!;
-            if(noteList.isEmpty){
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.note_add, size: 70,color: Colors.white60,),
-                    SizedBox.fromSize(size: Size.fromHeight(10),),
-                    Text('notes you add will appear here', style: TextStyle(color: Colors.white60, fontSize: 16)),
-                    SizedBox.fromSize(size: Size.fromHeight(15),),
-                  ],
-                ),
-              );
-            }
-            return ListView.builder(
-              reverse: false,
-              itemCount: noteList.length,
-              itemBuilder: (context, index) {
-                final note = noteList[index];
-                return NoteTileWidget(
-                  note: note,
-                  onTapCallBack: ()=> onTapNoteTile(context, note, index),
-                  onLongPressCallBack: () => onLongPressNoteTile(index, note.id),
-                  isSelected: mnsProvider.isNoteSelectedMap[index]!=null ? true :  false,
-                  index: index,
-                );
-              },
-            );
-
-          }
-        ),
-      )
-  );
-
   void onLongPressNoteTile(int index, int id) {
+    final mnsProvider = Provider.of<MultiNoteSelectProvider>(context, listen: false);
       if(mnsProvider.multiSelectMode == false){
         mnsProvider.enableMultiSelectMode();
         mnsProvider.selectNoteItem(index, id);
       }
   }
 
-
-
   void onTapNoteTile(context, note, index){
-      if(mnsProvider.multiSelectMode == false){
+    final mnsProvider = Provider.of<MultiNoteSelectProvider>(context, listen: false);
+    if(mnsProvider.multiSelectMode == false){
         editAndReturnEditedNote(context, note, index);
         return;
       }
@@ -135,19 +128,25 @@ class _NotePageState extends State<NotePage> {
   }
 
 
+}
 
-  PreferredSizeWidget selectModeAppBarBuilder() => SelectModeAppBar(
-    context: context,
-    notesRepository: notesRepository,
-    topHeight: MediaQuery.of(context).viewPadding.top,
-    disableSelectModeCallBack:mnsProvider.disableMultiSelectedMode,
-    archiveCallBack: (){},
-  );
+class NoteAppBar extends StatelessWidget with PreferredSizeWidget{
+  final BuildContext context;
+  final NotesRepository notesRepository;
+  const NoteAppBar({Key? key, required this.notesRepository, required this.context}) : super(key: key);
+  MultiNoteSelectProvider get  mnsProvider => Provider.of<MultiNoteSelectProvider>(context, listen: false);
 
-
-  void googleSignInCallback(){
-    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-    provider.googleLogin();
+  @override
+  Widget build(BuildContext context) {
+    return  mnsProvider.multiSelectMode ? SelectModeAppBar(
+        context: context,
+        notesRepository: notesRepository,
+        topHeight: MediaQuery.of(context).viewPadding.top,
+        disableSelectModeCallBack: mnsProvider.disableMultiSelectedMode,
+        archiveCallBack: (){},
+      ) : CustomAppBar(topHeight: MediaQuery.of(context).viewPadding.top, callback: mnsProvider.disableMultiSelectedMode, user: FirebaseAuth.instance.currentUser!, googleSignInCallback: Provider.of<GoogleSignInProvider>(context, listen: false).googleLogin);
   }
 
+  @override
+  Size get preferredSize =>mnsProvider.multiSelectMode ? Size.fromHeight(62) : Size.fromHeight(55);
 }
