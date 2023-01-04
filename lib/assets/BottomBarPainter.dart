@@ -6,20 +6,33 @@ class BottomBarPainter extends CustomPainter {
     Paint paint = Paint()
       ..color = Color(0xff2d2e32)
       ..style = PaintingStyle.fill;
-    Path path = Path()..moveTo(0, 0);
-    path.lineTo(size.width * 0.76, 0);
+    double x = size.width, y  = 0;
+    Path path = Path()..moveTo(x, 0);
+    path.lineTo(x-24, y);
+    x-=28;
     path.quadraticBezierTo(
-        size.width * 0.78, 0, size.width * 0.78, size.width * 0.02);
-    path.quadraticBezierTo(size.width * 0.78, size.width * 0.07,
-        size.width * 0.83, size.width * 0.07);
-    path.lineTo(size.width * 0.88, size.width * 0.07);
-    path.quadraticBezierTo(size.width * 0.93, size.width * 0.07,
-        size.width * 0.93, size.width * 0.03);
+        x-4, y, x - 4, y+6);
+    y+=6;
+    x-=4;
     path.quadraticBezierTo(
-        size.width * 0.93, size.width * 0.00, size.width * 0.96, 0);
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, 50);
-    path.lineTo(0, 50);
+        x-2, y+10, x - 10, y+13);
+    y+=13;
+    x-=10;
+    path.lineTo(x-44, y);
+    x-=44;
+
+    path.quadraticBezierTo(
+        x-10+2, y-3, x - 10, y-13);
+    y-=13;
+    x-=10;
+    path.quadraticBezierTo(
+        x, y-6, x - 4, y-6);
+    y-=6;
+    x-=4;
+
+    path.lineTo(0, 0);
+    path.lineTo(0, size.height);
+    path.lineTo(size.width, size.height);
     path.close();
 
     canvas.drawPath(path, paint);

@@ -17,11 +17,10 @@ Widget bottomBarWidget({required BuildContext context, required callBack}) {
           painter: BottomBarPainter(),
         ),
         Positioned(
-            right: 32.5,
-            top: -32,
-
+            right: 36,
+            top: -42,
             child: FloatingActionButton(
-              onPressed:()=> callBack(),
+              onPressed:callBack,
               backgroundColor: Color(0xff2d2e32),
               foregroundColor: Colors.yellow,
               elevation: 5,
